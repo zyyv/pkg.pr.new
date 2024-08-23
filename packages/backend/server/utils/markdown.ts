@@ -58,7 +58,7 @@ export function generatePullRequestPublishMessage(
   base: "sha" | "ref",
 ) {
   const isMoreThanFour = packages.length > 4;
-  const refMessages = packages
+  const packagesMessage = packages
     .map((packageName) => {
       const refUrl = generatePublishUrl(
         base,
@@ -75,16 +75,22 @@ ${packageManager} ${packageCommands[packageManager]} ${refUrl}
 `;
     })
     .map((message, i) =>
-      isMoreThanFour ? createCollapsibleBlock(`<b>${packages[i]}</b>`, message) : message,
+      isMoreThanFour ? createCollapsibleBlock(`<b>${packages[i]}</b>`, message, true) : message,
     )
-    .join("\n");
+
+  if(isMoreThanFour){
+    packagesMessage.unshift(`<details><summary><b>List of Packages</b></summary><ul>`)
+    packagesMessage.push(`</ul></details>`)
+  }
+
+  const refMessages = packagesMessage.join("\n");
 
   const templatesStr = generateTemplatesStr(templates);
 
   return `
 ${templatesStr}
 
-${!onlyTemplates ? refMessages : ""}
+${onlyTemplates ? "" : refMessages}
 
 _commit: <a href="${checkRunUrl}"><code>${abbreviateCommitHash(workflowData.sha)}</code></a>_
 `;
@@ -92,9 +98,9 @@ _commit: <a href="${checkRunUrl}"><code>${abbreviateCommitHash(workflowData.sha)
 
 function generateTemplatesStr(templates: Record<string, string>) {
   const entries = Object.entries(templates).filter(([k]) => k !== "default");
-  let str = `[Open in Stackblitz](${templates["default"]})`;
+  let str = `[Open in Stackblitz](${templates.default})`;
 
-  if (entries.length && entries.length <= 2) {
+  if (entries.length > 0 && entries.length <= 2) {
     str += ` • ${entries.map(([k, v]) => `[${k}](${v})`).join(" • ")}`;
   } else if (entries.length > 2) {
     str += createCollapsibleBlock(
@@ -125,11 +131,11 @@ export function generatePublishUrl(
   return new URL(urlPath, origin);
 }
 
-function createCollapsibleBlock(title: string, body: string) {
+function createCollapsibleBlock(title: string, body: string, wrapped = false) {
   return `
-<details><summary>${title}</summary><p>
+${wrapped ? '<li>' : ''}<details><summary>${title}</summary><p>
 ${body}
-</p></details>
+</p></details>${wrapped ? '</li>' : ''}
       
     `;
 }
