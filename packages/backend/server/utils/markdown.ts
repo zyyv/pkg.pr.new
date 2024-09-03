@@ -19,13 +19,18 @@ export function generateCommitPublishMessage(
   const isMoreThanFour = packages.length > 4;
   const shaMessages = packages
     .map((packageName) => {
-      const shaUrl = generatePublishUrl(
+      let shaUrl = generatePublishUrl(
         "sha",
         origin,
         packageName,
         workflowData,
         compact,
       );
+
+      if (packageManager === 'yarn') {
+        shaUrl = shaUrl + '.tgz'
+      }
+
       return `
 \`\`\`
 ${packageManager} ${packageCommands[packageManager]} ${shaUrl}
@@ -60,13 +65,17 @@ export function generatePullRequestPublishMessage(
   const isMoreThanFour = packages.length > 4;
   const packagesMessage = packages
     .map((packageName) => {
-      const refUrl = generatePublishUrl(
+      let refUrl = generatePublishUrl(
         base,
         origin,
         packageName,
         workflowData,
         compact,
       );
+
+      if (packageManager === 'yarn') {
+        refUrl = refUrl + '.tgz'
+      }
 
       return `
 \`\`\`
@@ -98,10 +107,10 @@ _commit: <a href="${checkRunUrl}"><code>${abbreviateCommitHash(workflowData.sha)
 
 function generateTemplatesStr(templates: Record<string, string>) {
   const entries = Object.entries(templates).filter(([k]) => k !== "default");
-  let str = `[Open in Stackblitz](${templates.default})`;
+  let str = templates.default ? `[Open in Stackblitz](${templates.default})` : '';
 
   if (entries.length > 0 && entries.length <= 2) {
-    str += ` • ${entries.map(([k, v]) => `[${k}](${v})`).join(" • ")}`;
+    str = [str, ...entries.map(([k, v]) => `[${k}](${v})`)].filter(Boolean).join(" • ");
   } else if (entries.length > 2) {
     str += createCollapsibleBlock(
       "<b>More templates</b>",
@@ -128,7 +137,7 @@ export function generatePublishUrl(
     ? `/${packageName}@${tag}`
     : `/${workflowData.owner}${shorter ? "" : `/${workflowData.repo}`}/${packageName}@${tag}`;
 
-  return new URL(urlPath, origin);
+  return `${new URL(urlPath, origin)}`;
 }
 
 function createCollapsibleBlock(title: string, body: string, wrapped = false) {

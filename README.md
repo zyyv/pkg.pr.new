@@ -31,6 +31,7 @@ It is aiming to reduce the number of these comments :)
 These are some of the projects and companies using pkg.pr.new:
 
 <p align="center">
+  <a href="https://trigger.dev/"><img src="https://trigger.dev/assets/triggerdev-logo--with-border.svg" height="40"></a>
   <a href="https://vuejs.org/"><img src="https://vuejs.org/images/logo.png" height="40"></a>
   <a href="https://huggingface.co/"><img src="https://huggingface.co/front/assets/huggingface_logo.svg" height="40"></a>
   <a href="https://about.meta.com/"><img src="https://github.com/facebook.png" height="40"></a>
@@ -45,20 +46,41 @@ These are some of the projects and companies using pkg.pr.new:
   <a href="https://unjs.io/"><img src="https://avatars.githubusercontent.com/u/80154025?s=200&v=4" height="40"></a>
   <a href="https://www.radix-vue.com/"><img src="https://www.radix-vue.com/logo.svg" height="40"></a>
   <a href="https://www.gradio.app/"><img src="https://www.gradio.app/_app/immutable/assets/gradio.CHB5adID.svg" height="40"></a>
-  <a href="https://clockworklabs.io/"><img src="https://clockworklabs.io/images/logo.svg" height="40"></a>
+  <a href="https://clockworklabs.io/"><img src="https://github.com/user-attachments/assets/85d42291-6676-4592-b6a0-ee4b6350dc47" height="40"></a>
   <a href="https://valtio.pmnd.rs/"><img src="https://blog.stackblitz.com/posts/pkg-pr-new/valtio.svg" height="40"></a>
   <a href="https://github.com/nksaraf/vinxi"><img src="https://github.com/nksaraf/vinxi/raw/main/docs/public/logo.png" height="40"></a>
   <a href="https://github.com/scalar/scalar"><img src="https://github.com/scalar.png" height="40"></a>
   <a href="https://tresjs.org/"><img src="https://avatars.githubusercontent.com/u/119253150?s=200&v=4" height="40"></a>
   <a href="https://github.com/capawesome-team/"><img src="https://avatars.githubusercontent.com/u/105555861?s=200&v=4" height="40"></a>
   <a href="https://unocss.dev"><img src="https://unocss.dev/logo.svg" height="40"></a>
+  <a href="https://github.com/kazupon/vue-i18n">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/intlify/art/master/logo_symbol_negative.svg" height="40" />
+        <img height="40" src="https://raw.githubusercontent.com/intlify/art/master/logo_symbol.svg">
+    </picture>
+  </a>
+  <a href="https://github.com/vite-pwa">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vite-pwa/.github/main/hero-dark.svg" height="40" />
+        <img height="40" src="https://raw.githubusercontent.com/vite-pwa/.github/main/hero-light.svg">
+    </picture>
+  </a>
+   <a href="https://github.com/forge42dev/open-source-stack"><img src="https://avatars.githubusercontent.com/u/161314831?s=200&v=4" height="40"></a>
+   <a href="https://sidebase.io"><img src="https://avatars.githubusercontent.com/u/112630501?s=200&v=4" height="40"></a>
+   <a href="https://rolldown.rs/"><img src="https://avatars.githubusercontent.com/u/94954945" height="40"></a>
+   <a href="https://element-plus.org/"><img src="https://avatars.githubusercontent.com/u/68583457?s=48&v=4" height="40"></a>
+   <a href="https://valibot.dev/"><img src="https://raw.githubusercontent.com/fabian-hiller/valibot/main/brand/valibot-icon.svg" height="40"></a>
+   <a href="https://codemod.com/"><img src="https://github.com/codemod-com.png" height="40"></a>
+   <a href="https://uploadthing.com/"><img src="https://uploadthing.com/UploadThing-Logo.svg" height="40"></a>
+
+
 </p>
 
 Feel free to add your project or company here to join the pkg.pr.new family :)
 
 ## Setup
 
-The Github Application is available [here](https://github.com/apps/pkg-pr-new).
+First [install the Github Application](https://github.com/apps/pkg-pr-new).
 
 > [!IMPORTANT]
 > Make sure it's installed on the repository before trying to publish a package.
@@ -140,7 +162,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - run: corepack enable
       - uses: actions/setup-node@v4
@@ -172,7 +194,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - run: corepack enable
       - uses: actions/setup-node@v4
